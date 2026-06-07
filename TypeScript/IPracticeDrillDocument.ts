@@ -1,4 +1,4 @@
-import type {StrictMusicalNote} from "./MusicalNote";
+import type { StrictMusicalNote } from "./MusicalNote";
 
 export interface IPracticeDrillDocument {
   _id: string;
