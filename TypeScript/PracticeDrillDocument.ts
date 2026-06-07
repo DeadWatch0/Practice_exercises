@@ -1,6 +1,6 @@
 import type {StrictMusicalNote} from "./MusicalNote";
 
-interface PracticeDrillDocument {
+export interface IPracticeDrillDocument {
   _id: string;
   title: string;
   rootNote: StrictMusicalNote;
@@ -8,9 +8,9 @@ interface PracticeDrillDocument {
 }
 
 /* using mapped types option
-type sanitizedDocument = {[key in keyof PracticeDrillDocument as key extends '_id' ? 'id' : key]: PracticeDrillDTO[key]};
+type sanitizedDocument = {[key in keyof PracticeDrillDocument as key extends '_id' ? 'id' : key]: IPracticeDrillDTO[key]};
 
 interface PracticeDrillDTO extends sanitizedDocumen {}; 
 */
 
-type PracticeDrillDTO = Omit<PracticeDrillDocument, '_id'> & <id: string>
+export type PracticeDrillDTO = Omit<IPracticeDrillDocument, '_id'> & <id: string>
