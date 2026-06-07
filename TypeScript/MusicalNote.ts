@@ -1,6 +1,6 @@
-type StrictMusicalNote = 'A'| 'B'| 'C'| 'D'| 'E'| 'F' | 'G';
+export type StrictMusicalNote = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
 
-interface MusicalNote {
+export interface MusicalNote {
     pitch: StrictMusicalNote;
     readonly octave: number;
     frequency?: number;
