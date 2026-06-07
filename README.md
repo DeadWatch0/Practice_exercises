@@ -1,42 +1,47 @@
-# 📘 TypeScript Architecture: Core Domain & Data Contracts
+# 💻 Full-Stack Engineering Practice Environment
 
-This update establishes the complete structural blueprint for the interactive music interval visualizer. By prioritizing pure type definitions before implementing logic, we guarantee type safety across all three tiers: the React frontend, the Express API, and the MongoDB persistence layer.
+This repository serves as a centralized workspace for mastering modern, scalable web architecture. It tracks the vertical progression of a complete 3-tier stack—from database persistence to client-side 3D rendering.
 
-## 🏗 Architecture Overview
+The primary application driving this learning progression is an **Interactive Music Interval Visualizer**, acting as a "tracer bullet" to test strict data contracts across the entire stack.
 
-The system relies on strict structural contracts to eliminate runtime errors, specifically targeting mismatched API payloads and invalid interval math. The type system acts as a rigid boundary, ensuring that only mathematically sound musical data enters the database and only sanitized JSON reaches the 3D rendering engine.
+## 🏗 System Architecture
 
-## 📂 File & Concept Registry
+The application is heavily reliant on strictly typed, declarative data flow. To ensure stability, the system uses shared TypeScript interfaces to govern how mathematical interval data is generated, sanitized, and passed between layers.
 
-### 1. Core Domain Models (`MusicalNote.ts`)
-* **Concepts:** Interfaces, Type Aliases, Literal Types, Readonly Properties.
-* **Purpose:** Defines the fundamental unit of the application. Enforces strict musical notation (locking `pitch` to `'A'` through `'G'`) to prevent invalid states before data ever reaches the fretboard logic.
+```text
+[ Client Tier ]             [ Application Tier ]          [ Persistence Tier ]
+    React         <======>        Express        <======>       MongoDB
+(Visualizer UI)   JSON API     (Node Server)     Mongoose     (Data Store)
+       |                            |                               |
+       v                            v                               v
+ Render Fretboard             Sanitize DTOs                 Store Drill Data
 
-### 2. Network Contracts (`ApiResponse.ts`)
-* **Concepts:** Generics (`<T>`).
-* **Purpose:** A universal shipping container for all Express responses. By injecting specific payloads (like `MusicalNote[]`), the frontend receives precise autocompletion and error boundaries for HTTP requests.
+```
 
-### 3. State Management (`VisualizerAction.ts`)
-* **Concepts:** Discriminated (Tagged) Unions.
-* **Purpose:** Dictates the exact commands the React frontend can issue (e.g., `PLAY_NOTE` vs. `STOP`). The shared `type` discriminator ensures reducers process only the exact data required for a given state change.
+## 📂 Repository Structure
 
-### 4. Database Boundaries (`IPracticeDrillDocument.ts` & `CreatePracticeDrillPayload.ts`)
-* **Concepts:** Utility Types (`Omit`), Intersection Types (`&`).
-* **Purpose:** Manages the mismatch between MongoDB's internal `_id` structure and the pure JSON expected by React. 
-  * `IPracticeDrillDocument`: Maps directly to the Mongoose schema.
-  * `PracticeDrillDTO`: Strips database-specific fields for frontend consumption.
-  * `CreatePracticeDrillPayload`: Secures the incoming Express `POST` request before the ID is generated.
+The codebase is modular, isolating specific technologies into their respective directories to build concepts incrementally before integration.
 
-### 5. API Layer (`createDrill.ts`)
-* **Concepts:** Express Request/Response Generic Typing.
-* **Purpose:** The security checkpoint. Binds the `CreatePracticeDrillPayload` to `req.body` and `ApiResponse` to `res`, guaranteeing the controller cannot accept or emit malformed data.
+* **`/typescript`**: The Core Domain. Contains the pure structural blueprints, generic API responses, and the mathematical engine (Constellation maps) that converts interval degrees into physical fretboard coordinates.
+* **`/react`** *(Pending)*: The Presentation Layer. Will house the component tree, local state reducers, and the 3D visualizer canvas, consuming the strictly typed APIs.
+* **`/express`** *(Pending)*: The API Layer. Will handle HTTP routing, middleware validation, and database interactions using Express.js and Mongoose.
+* **`/mongodb`** *(Pending)*: The Persistence Layer. Will define the NoSQL document schemas for storing generated practice drills.
 
-### 6. The Constellation Engine (`Constellation.ts`)
-* **Concepts:** Mapped Types, Labeled Tuples.
-* **Purpose:** The mathematical core of the visualizer. Dynamically maps generic interval unions (e.g., `'1' | 'b3' | '5'`) to exact physical coordinates on the guitar. Uses strictly enforced labeled tuples (`[stringNumber: number, fretNumber: number][]`) to feed pure, error-free geometry data to the 3D rendering engine.
+## 🚀 Current Progress: Phase 1 (Core Domain)
 
-## 🚀 Next Steps (Implementation Phase)
-With the static blueprints locked, the next phase transitions into dynamic execution:
-1. Initialize the Express.js local server and attach the Mongoose schema to the `IPracticeDrillDocument`.
-2. Construct the HTTP routing pipeline using the typed `createDrill` controller.
-3. Scaffold the React frontend state to ingest the `PracticeDrillDTO`.
+The foundational TypeScript architecture is complete. All dynamic endpoints are now protected by strict static types, eliminating entire classes of runtime errors before the UI or Server is even initialized.
+
+**Key Implementations:**
+
+* **Domain Models:** Strict literal types for musical notation (e.g., `'A'` through `'G'`).
+* **State Management:** Discriminated unions mapping precise UI commands (e.g., `PLAY_NOTE` vs. `STOP`).
+* **Database Boundaries:** Utility types (`Omit`) bridging internal MongoDB `_id` schemas with sanitized frontend DTOs.
+* **Constellation Engine:** Advanced mapped types and labeled tuples transforming generic musical intervals into precise `[stringNumber, fretNumber]` coordinates.
+
+## 🗺 Deployment Roadmap
+
+As the repository matures, the final application will transition from local development servers to a production-ready environment.
+
+1. **Component Integration:** Wire the Express backend to the React frontend utilizing `useEffect` and custom hooks for data fetching.
+2. **Containerization:** Package the Node server, React static build, and MongoDB instance into isolated Docker containers.
+3. **Self-Hosting:** Deploy the containerized stack to a local Linux homelab environment for real-world network monitoring and performance testing.
