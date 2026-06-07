@@ -13,4 +13,4 @@ type sanitizedDocument = {[key in keyof PracticeDrillDocument as key extends '_i
 interface PracticeDrillDTO extends sanitizedDocumen {}; 
 */
 
-export type PracticeDrillDTO = Omit<IPracticeDrillDocument, '_id'> & <id: string>
+export type PracticeDrillDTO = Omit<IPracticeDrillDocument, '_id'> & { id: string };

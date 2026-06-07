@@ -1,3 +1,3 @@
 import { IPracticeDrillDocument } from "./IPracticeDrillDocument";
 
-export type CreatePracticeDrillPayload = Omit<PracticeDrillDocument, '_id'>;
+export type CreatePracticeDrillPayload = Omit<IPracticeDrillDocument, '_id'>;
