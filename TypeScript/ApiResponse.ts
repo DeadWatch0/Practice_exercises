@@ -1,4 +1,4 @@
-import type {StrictMusicalNote, MusicalNote} from "./MusicalNote";
+import type { StrictMusicalNote, MusicalNote } from "./MusicalNote";
 
 export interface ApiResponse<T> {
   data: T | null;
