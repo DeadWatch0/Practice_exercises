@@ -1,4 +1,4 @@
-# 🎸 TypeScript Architecture: Core Domain & Data Contracts
+# 📘 TypeScript Architecture: Core Domain & Data Contracts
 
 This update establishes the complete structural blueprint for the interactive music interval visualizer. By prioritizing pure type definitions before implementing logic, we guarantee type safety across all three tiers: the React frontend, the Express API, and the MongoDB persistence layer.
 
